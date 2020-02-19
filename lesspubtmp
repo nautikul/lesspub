@@ -1,0 +1,25 @@
+#!/bin/sh
+# ePub reader. it unzips an epub of your choice, and loads it into a browser of your choice. 
+
+# Note that this was made for CLI-based browsers but *should* work with any browser since it's
+# just loading HTML files. :)
+
+# Usage: ./epubread -{k,t} file.epub
+
+BDIR=$(mktemp -d)
+
+printf "What is the book's name? "
+read -r BNAME
+
+# Make the tmp 
+mkdir -p "$BDIR"/chapters
+unzip -qqj "$1" "*.html" -x  OEBPS/wrap0000.html -d "$BDIR"/chapters 
+
+# Clean up files, merge html files for text based browser 
+cat "$BDIR"/chapters/*.html > "$BDIR"/"$BNAME".bark
+
+# Remove HTML from text, consolidate into a single file using sed
+sed -e 's/<[^>]*>/ /g' "$BDIR"/"$BNAME".bark > "$BDIR"/"$BNAME".txt
+
+# Read yo book!
+less -s -M +Gg "$BDIR"/"$BNAME".txt
