@@ -1,0 +1,18 @@
+#!/bin/sh
+# ePub reader. it unzips an epub of your choice, and reads it with `less`. 
+
+# Usage: ./epubread file.epub
+
+BDIR=$(mktemp -d)
+
+# Unzip the epub
+unzip -qqqj "$1" "*.html" -qx  OEBPS/wrap0000.html -d "$BDIR"/
+
+# Clean up files, merge html files for text based browser 
+cat "$BDIR"/*.html > "$BDIR"/book.bark
+
+# Remove HTML from text, consolidate into a single file using sed
+sed -e 's/<[^>]*>/ /g' "$BDIR"/book.bark > "$BDIR"/book.txt
+
+# Read yo book!
+less -s -M +Gg "$BDIR"/book.txt
