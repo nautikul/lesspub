@@ -6,7 +6,7 @@
 BDIR=$(mktemp -d)
 
 # Unzip the epub
-unzip -qqqj "$1" "*.html" -qx  OEBPS/wrap0000.html -d "$BDIR"/
+unzip -qqqj "$1" "*.html" -x  OEBPS/wrap0000.html -d "$BDIR"/
 
 # Clean up files, merge html files for text based browser 
 cat "$BDIR"/*.html > "$BDIR"/book.bark
