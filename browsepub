@@ -1,0 +1,5 @@
+#!/bin/sh
+BDIR=$(mktemp -d)
+unzip -qqqj "$2" "*.html" -x  OEBPS/wrap0000.html -d "$BDIR"/
+cat "$BDIR"/*.html > "$BDIR"/book.html
+$1 "$BDIR"/book.html
