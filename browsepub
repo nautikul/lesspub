@@ -1,4 +1,26 @@
 #!/bin/sh
+
+# Usage: ./browsepub $BROWSER $EPUB
+# Example: ./browsepub links 
+
+# browsepub is the browser equivalent of lesspub (hence the name)
+# If lesspub isn't formatted very well for you, this one will work;
+# The reason is that sometimes the epub's .html split files rely
+# on formatting by html tags. I'm sure there's a way to automate a 
+# semi-proper formatting, but as these are tiny little projects, I
+# Don't have time to individualize the `sed` commands to replace 
+# each <tag> with the equivalent command (linebreak, indentures, etc)
+# I actually prefer this one as it's just as small of a file (albeit with
+# the extra burden of requiring a text-based browser to work properly)
+# But with the added bonus of having a more readable format.
+# Hope this works well!
+
+# Side note: What I do on my personal computer, is delete all the
+# comments that are just taking up space to make the program as small 
+# as possible. Feel free to do the same. Without the comments, it's 
+# below 200 bytes, which I feel is important because I just *love* 
+# small, usable scripts.
+
 BDIR=$(mktemp -d)
 unzip -qqqj "$2" "*.html" -x  OEBPS/wrap0000.html -d "$BDIR"/
 cat "$BDIR"/*.html > "$BDIR"/book.html
