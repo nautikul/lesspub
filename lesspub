@@ -5,7 +5,7 @@ BDIR=$(mktemp -d)
 # Unzip the epub
 unzip -qqj "$1" "*.*html" -x  OEBPS/wrap0000.html -d "$BDIR"/
 # Clean up files, merge html files for text based browser 
-cat "$BDIR"/*.*html > "$BDIR"/book.bark
+cat "$BDIR"/"*.*html" > "$BDIR"/book.bark
 # Remove HTML from text, consolidate into a single file using sed
 sed -e 's/<[^>]*>/ /g' "$BDIR"/book.bark > "$BDIR"/book.txt
 # Read yo book!
