@@ -21,7 +21,10 @@
 # below 200 bytes, which I feel is important because I just *love* 
 # small, usable scripts.
 
+# This includes a "quick fix" just in case the book is in an .xhtml file
+# instead of .html. In this case, "quick fix" means an extra wild card!
+
 BDIR=$(mktemp -d)
-unzip -qqqj "$2" "*.html" -x  OEBPS/wrap0000.html -d "$BDIR"/
-cat "$BDIR"/*.html > "$BDIR"/book.html
+unzip -qqqj "$2" "*.*html" -x  OEBPS/wrap0000.html -d "$BDIR"/
+cat "$BDIR"/*.*html > "$BDIR"/book.html
 $1 "$BDIR"/book.html
